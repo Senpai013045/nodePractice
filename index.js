@@ -6,13 +6,6 @@ const https = require("https");
 const { StringDecoder } = require("string_decoder");
 const config = require("./config");
 const fs = require("fs");
-const _data = require("./lib/data");
-
-//testing
-//@TODO delete this
-_data.update("test", "newFile", { me: "on caffeine" }, (err) => {
-  console.log("Error", err);
-});
 
 //create the http server
 const httpServer = http.createServer((request, response) => {
