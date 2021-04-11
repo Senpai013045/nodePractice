@@ -4,8 +4,10 @@
 const http = require("http");
 const https = require("https");
 const { StringDecoder } = require("string_decoder");
-const config = require("./config");
+const config = require("./lib/config");
 const fs = require("fs");
+const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
 
 //create the http server
 const httpServer = http.createServer((request, response) => {
@@ -88,7 +90,7 @@ function unifiedServer(request, response) {
       trimmedPath,
       searchParams,
       method,
-      buffer,
+      payload: helpers.parseJson(buffer),
     };
     //call the chosen handler
     chosenHandler(
@@ -113,41 +115,16 @@ function unifiedServer(request, response) {
         response.end(payloadJSON);
 
         //logging stuffs
-        console.log("Served was pinged on", pathname, "with data", buffer);
+        console.log("Served was pinged on", pathname);
         console.log("Server responded with", statusCode, payloadJSON);
       }
     );
   });
 }
 
-//handlers
-var handlers = {};
-
-//sample handler
-handlers.sample = function (data, callback) {
-  //pass in an ananymous function and it will inject stuffs that we can pass from here
-  const statusCode = 406;
-  const payload = { name: "Subham", course: "Node js masterclass" };
-  //callback injects a statuscode and payload
-  callback(statusCode, payload);
-};
-
-//ping handler
-handlers.ping = function (data, callback) {
-  const statusCode = 200;
-  const payload = { message: "pong" };
-  callback(statusCode, payload);
-};
-
-//not found handler
-handlers.notFound = function (data, callback) {
-  //callback a 404
-  const statusCode = 404;
-  callback(statusCode);
-};
-
 //router
 var router = {
   sample: handlers.sample,
   ping: handlers.ping,
+  users: handlers.users,
 };
