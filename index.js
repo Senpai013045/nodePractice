@@ -115,6 +115,7 @@ function unifiedServer(request, response) {
         response.end(payloadJSON);
 
         //logging stuffs
+        console.log(searchParams.get("phone"));
         console.log("Served was pinged on", pathname);
         console.log("Server responded with", statusCode, payloadJSON);
       }
@@ -127,4 +128,5 @@ var router = {
   sample: handlers.sample,
   ping: handlers.ping,
   users: handlers.users,
+  tokens: handlers.tokens,
 };
