@@ -87,6 +87,7 @@ function unifiedServer(request, response) {
         : handlers.notFound;
 
     const dataToBeSentToTheHandler = {
+      headers,
       trimmedPath,
       searchParams,
       method,
