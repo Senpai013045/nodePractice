@@ -1,3 +1,4 @@
+//@ts-check
 //main file
 
 //dependencies
@@ -86,6 +87,15 @@ function unifiedServer(request, response) {
         ? router[trimmedPath]
         : handlers.notFound;
 
+    /**
+     * @typedef {Object} Query
+     * @property {Function} get - Takes in key(string) and gets the value
+     * @property {Function} set - Takes in key(string) and sets the value
+     */
+
+    /**
+     * @type {{headers:Object,trimmedPath:string,searchParams:Query,method:string,payload:Object}}
+     */
     const dataToBeSentToTheHandler = {
       headers,
       trimmedPath,
